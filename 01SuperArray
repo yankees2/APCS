@@ -107,6 +107,6 @@ public class SuperArray{
 	    }
 	    array = holder;
 	    return removed;
-	  }
-  }
+	}
+    }
 }
