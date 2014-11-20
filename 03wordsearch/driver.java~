@@ -1,0 +1,8 @@
+public class driver{
+    public static void main(String[]args){
+	WordGrid a = new WordGrid(5,5);
+	System.out.println(a.toString());
+	a.clear();
+	System.out.println(a.toString());
+    }
+}
