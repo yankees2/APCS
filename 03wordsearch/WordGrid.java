@@ -53,8 +53,17 @@ public class WordGrid{
      *or there are overlapping letters that do not match, then false is returned.
      */
 
-    public boolean addWordHorizontal(String word,int row,int col){
+    public boolean addWordHorizontal(String word,int row,int col,boolean GoBack){
 	char[] array = word.toCharArray();
+	if (GoBack){
+	    int x = 0;
+	    char[] temp = new char[array.length];
+	    while (x<array.length){
+		temp[x] = array[array.length-x-1];
+		x++;
+	    }
+	    array = temp;
+	}
 	if (array.length>data[row].length-col){
 	    return false;
 	} else {
@@ -74,8 +83,17 @@ public class WordGrid{
 	}
     }
 
-    public boolean addWordVertical(String word,int row,int col){
+    public boolean addWordVertical(String word,int row,int col,boolean GoUp){
 	char[] array = word.toCharArray();
+	if (GoUp){
+	    int x = 0;
+	    char[] temp = new char[array.length];
+	    while (x<array.length){
+		temp[x] = array[array.length-x-1];
+		x++;
+	    }
+	    array = temp;
+	}
 	if (array.length>data.length-row){
 	    return false;
 	} else {
