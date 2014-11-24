@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class WordGrid{
     private char[][] data;
 
@@ -113,8 +115,17 @@ public class WordGrid{
 	}
     }
 
-    public boolean addWordDiagonal(String word,int row,int col){
+    public boolean addWordDiagonal1(String word,int row,int col,boolean GoUpLeft){
 	char[] array = word.toCharArray();
+	if (GoUpLeft){
+	    int x = 0;
+	    char[] temp = new char[array.length];
+	    while (x<array.length){
+		temp[x] = array[array.length-x-1];
+		x++;
+	    }
+	    array = temp;
+	}
 	int length = 0;
 	int a = row;
 	int b = col;
@@ -149,5 +160,23 @@ public class WordGrid{
 	    return true;
 	}
     }
+
+    public void fill(String word){
+	Random rand = new Random();
+	boolean direction;
+	if (rand.nextInt(2)==0){
+	    direction = true;
+	} else {
+	    direction = false;
+	}
+	int y = rand.nextInt(data.length);
+	int x = rand.nextInt(data[y].length);
+	if (!addWordHorizontal(word,y,x,direction)){
+	    if (!addWordVertical(word,y,x,direction)){
+		addWordDiagonal1(word,y,x,direction);
+	    }
+	}
+    }
+	
 }
 		
