@@ -14,6 +14,7 @@ public class driver{
 	    a.add(8,9);
 	    a.add(9,10);
 	    System.out.println(a.toString());
+	    System.out.println(a.getCap());
 	    System.out.println(a.remove(9));
 	    System.out.println(a.remove(8));
 	    System.out.println(a.remove(7));
