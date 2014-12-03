@@ -1,7 +1,13 @@
 import java.util.Random;
+import java.io.File;
+import java.util.Scanner;
+import java.util.*;
+import java.io.FileNotFoundException;
 
 public class WordGrid{
     private char[][] data;
+    Random rand = new Random();
+    ArrayList<String> works = new ArrayList<String>();
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -161,22 +167,92 @@ public class WordGrid{
 	}
     }
 
-    public void fill(String word){
-	Random rand = new Random();
-	boolean direction;
-	if (rand.nextInt(2)==0){
-	    direction = true;
-	} else {
-	    direction = false;
+    public boolean add(String word,int row,int col,int dx,int dy){
+	char[] array = word.toCharArray();
+	if (dx==0 && dy==0){
+	    return false;
 	}
-	int y = rand.nextInt(data.length);
-	int x = rand.nextInt(data[y].length);
-	if (!addWordHorizontal(word,y,x,direction)){
-	    if (!addWordVertical(word,y,x,direction)){
-		addWordDiagonal1(word,y,x,direction);
+	int length = 0;
+	int a = row;
+	int b = col;
+	while (a>=0 && a<data.length && b>=0 && b<=data[0].length){
+	    length++;
+	    a=a+dy;
+	    b=b+dx;
+	}
+	if (array.length>length){
+	    return false;
+	} else {
+	    a = row;
+	    b = col;
+	    int c = 0;
+	    while (c<array.length && a>=0 && a<data.length && b>=0 && b<data[0].length){
+		if (data[a][b]!=array[c] && data[a][b]!='_'){
+		    return false;
+		}
+		a+=dy;
+		b+=dx;
+		c++;
+	    }
+	    a = row;
+	    b = col;
+	    c = 0;
+	    while (c<array.length && a>=0 && a<data.length && b>=0 && b<data[0].length){		
+		data[a][b]=array[c];
+		a+=dy;
+		b+=dx;
+		c++;
+	    }
+	    return true;
+	}
+    }
+
+    public void loadWordsFromFile(String filename,boolean fillRandomLetters)throws FileNotFoundException{
+	File text = new File(filename);
+	Scanner scnr = new Scanner(text);
+	ArrayList<String> words = new ArrayList<String>();
+	while (scnr.hasNext()){
+	    words.add(scnr.next());
+	}
+	int x = 0;
+	while (x<60){
+	    int row = rand.nextInt(data.length);
+	    int col = rand.nextInt(data[0].length);
+	    int dx = rand.nextInt(3)-1;
+	    int dy = rand.nextInt(3)-1;
+	    int which = rand.nextInt(words.size());
+	    if (add(words.get(which),row,col,dx,dy)){
+		works.add(words.get(which));
+		words.remove(which);
+	    }
+	    x++;
+	}
+	if (!fillRandomLetters){
+	    for(int a = 0; a < data.length; a++){
+		for(int b = 0; b <data[0].length;b++){
+		    if(data[a][b] == '_'){
+			data[a][b] = (char)(rand.nextInt(26) + 'a');
+		    }
+		}
 	    }
 	}
     }
-	
+    
+    public String wordsInPuzzle(){
+	String find = "";
+	int x = 0;
+	while (x<works.size()){
+	    find+=works.get(x)+"   ";
+	    if ((x+1)%4==0){
+		find+="\n";
+	    }
+	    x++;
+	}
+	return find;
+    }
+
+    public void setSeed(long seed){
+	rand = new Random(seed);
+    }
 }
 		
