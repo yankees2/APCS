@@ -114,4 +114,35 @@ public class SuperArray{
 	    return removed;
 	}
     }
+
+    public void insertionSort(){
+	int index = 1;
+	String hold = "hi";
+	int putin = 0;
+	int fill = 0;
+	boolean keepgoing;
+	while (index<array.length){
+	    keepgoing = true;
+	    int check = index;
+	    while (keepgoing && check>1){
+		if (array[index].compareTo(array[check-2])>=0 && array[index].compareTo(array[check-1])<=0){
+		    hold = array[index];
+		    fill = index;
+		    putin = check-1;
+		    keepgoing = false;
+		}
+		check--;
+		if (check==1){
+		    hold = array[index];
+		    fill = index;
+		    putin = 0;
+		}
+	    }
+	    while (fill>putin){
+		array[fill] = array[fill-1];
+	    }
+	    array[putin] = hold;
+	    index++;
+	}
+    }
 }
