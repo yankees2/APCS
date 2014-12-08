@@ -3,10 +3,12 @@ public class SuperArray{
     public String[] array;
 
     public SuperArray(){
+	current = 0;
 	array = new String[10];
     }
 
     public SuperArray(int x){
+	current = 0;
 	array = new String[x];
     }
 
@@ -50,12 +52,16 @@ public class SuperArray{
 	}
     }
 
-    public int size(){
-	int x = 0;
-	while (array[x]!=null){
-	    x++;
+    public void add(String o){
+	if(size() == array.length){
+	    resize(current*2);
 	}
-	return x;
+	array[current] = o;
+	current++;
+    }
+
+    public int size(){
+	return current;
     }
 
     public void resize(int newCapacity){
@@ -116,33 +122,60 @@ public class SuperArray{
     }
 
     public void insertionSort(){
-	int index = 1;
-	String hold = "hi";
-	int putin = 0;
-	int fill = 0;
-	boolean keepgoing;
-	while (index<array.length){
-	    keepgoing = true;
-	    int check = index;
-	    while (keepgoing && check>1){
-		if (array[index].compareTo(array[check-2])>=0 && array[index].compareTo(array[check-1])<=0){
-		    hold = array[index];
-		    fill = index;
-		    putin = check-1;
-		    keepgoing = false;
+	String s = "";
+	if(size() > 1){
+	    int x = 1;
+	    while (x<size()){
+		if(get(x).compareTo(get(x-1)) < 0){
+		    s = get(x);
+		    int y = x;
+		    while(y > 0 &&s.compareTo(get(y-1)) < 0){
+			set(y,get(y-1));
+			y--;
+		    }
+		    set(y,s);
 		}
-		check--;
-		if (check==1){
-		    hold = array[index];
-		    fill = index;
-		    putin = 0;
-		}
+		x++;
 	    }
-	    while (fill>putin){
-		array[fill] = array[fill-1];
-	    }
-	    array[putin] = hold;
-	    index++;
 	}
+    }
+
+    public void badInsertionSort(){
+
+        OrderedSuperArray c = new OrderedSuperArray();
+        while( this.size() > 0){ 
+            c.add(this.remove(0));
+        }
+        while(c.size() > 0){
+            this.add(c.remove(0));
+        }
+    }
+
+    public void selectionSort(){
+	String smallestWord;
+	int min = 0;
+	for(int i = 0; i < size(); i++){
+	    smallestWord = get(i);
+	    min = i;
+	    for(int a = i; a < size(); a++){
+		if(get(a).compareTo(smallestWord) < 0){
+		    smallestWord = get(a);
+		    min = a;
+		}
+	    }
+	    set(min, get(i));
+	    set(i, smallestWord);
+	}
+    }
+
+    public int find(String target){
+	int where = 0;
+	for(int i = 0; i < size(); i++){
+	    if(target.equals(get(i))){
+		where = i;
+		return where;
+	    }
+	}
+	return -1;
     }
 }

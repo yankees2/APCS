@@ -26,4 +26,15 @@ public class OrderedSuperArray extends SuperArray{
 	    } while (place<array.length && keepgoing);
 	}
     }
+
+    public int find(String target){
+	int where = 0;
+	for(int i = 0; i < size(); i++){
+	    if(target.equals(get(i))){
+		where = i;
+		return where;
+	    }
+	}
+	return -1;
+    }
 }
