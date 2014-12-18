@@ -1,5 +1,32 @@
 public class Sorts{
 
+    public String name(){
+	return "Won,Brian";
+    }
+
+    public int period(){
+	return 6;
+    }
+
+    public static void insertionSort(int[] c){
+	int s = 0;
+	if(c.length > 1){
+	    int x = 1;
+	    while (x<c.length){
+		if(c[x]<c[x+1]){
+		    s = c[x];
+		    int y = x;
+		    while(y > 0 && s < c[y-1]){
+			c[y] = c[y-1];
+			y--;
+		    }
+		    c[y] = s;
+		}
+		x++;
+	    }
+	}
+    }
+
     public static void bubble(int[] c){
 	int inplace = 0;
 	while (inplace < c.length){

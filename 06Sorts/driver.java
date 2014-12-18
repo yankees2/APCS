@@ -7,7 +7,7 @@ public class driver{
 	a[3]=4;
 	a[4]=1;
 	System.out.println(a[0]+","+a[1]+","+a[2]+","+a[3]+","+a[4]);
-	Sorts.bubble(a);
+	Sorts.insertionSort(a);
         System.out.println(a[0]+","+a[1]+","+a[2]+","+a[3]+","+a[4]);
     }
 }
