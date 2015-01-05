@@ -9,21 +9,43 @@ public class Sorts{
     }
 
     public static void insertionSort(int[] c){
-	int s = 0;
-	if(c.length > 1){
-	    int x = 1;
-	    while (x<c.length){
-		if(c[x]<c[x+1]){
-		    s = c[x];
-		    int y = x;
-		    while(y > 0 && s < c[y-1]){
-			c[y] = c[y-1];
-			y--;
+	int x = 1;
+	while (x<c.length){
+	    int y = x-1;
+	    int beingmoved = c[x];
+	    loop: while (y>=0){
+		if (c[y]>beingmoved){
+		    c[y+1] = c[y];
+		    if (y == 0){
+			c[0] = beingmoved;
+			break loop;
 		    }
-		    c[y] = s;
+		} else {
+		    c[y+1] = beingmoved;
+		    break loop;
 		}
-		x++;
+		y--;
 	    }
+	    x++;
+	}
+    }
+
+    public static void selectionSort(int[] c){
+	int min;
+	int x = 0;
+	while (x<c.length-1){
+	    min = c[x];
+	    int toswap = x;
+	    int y = x;
+	    while (y<c.length){
+		if (c[y]<min){
+		    min = c[y];
+		    toswap = y;
+		}
+		y++;
+	    }
+	    swap(c,x,toswap);
+	    x++;
 	}
     }
 
